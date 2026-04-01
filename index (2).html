@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MARIN HAIR — 헤어케어</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --black: #0a0a0a;
+      --white: #fafaf7;
+      --cream: #f2ede4;
+      --sage: #8a9e8c;
+      --gold: #c9a96e;
+      --muted: #6b6b63;
+      --border: rgba(10,10,10,0.1);
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { background:var(--white); color:var(--black); font-family:'DM Sans',sans-serif; font-weight:300; overflow-x:hidden; }
+
+    nav {
+      position:fixed; top:0; left:0; right:0; z-index:100;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:20px 48px;
+      background:rgba(250,250,247,0.93);
+      backdrop-filter:blur(12px);
+      border-bottom:0.5px solid var(--border);
+      transition:box-shadow 0.3s;
+    }
+    .nav-logo {
+      font-family:'Cormorant Garamond',serif;
+      font-size:22px; font-weight:600; letter-spacing:0.12em;
+      text-transform:uppercase; text-decoration:none; color:var(--black);
+    }
+    .nav-links { display:flex; gap:36px; list-style:none; }
+    .nav-links a {
+      font-size:12px; letter-spacing:0.08em; text-transform:uppercase;
+      text-decoration:none; color:var(--muted); transition:color 0.2s;
+    }
+    .nav-links a:hover { color:var(--black); }
+    .cart-btn {
+      font-size:12px; letter-spacing:0.08em; text-transform:uppercase;
+      background:var(--black); color:var(--white);
+      padding:10px 22px; border:none; cursor:pointer; transition:background 0.2s;
+    }
+    .cart-btn:hover { background:var(--sage); }
+
+    .hero { height:100vh; display:grid; grid-template-columns:1fr 1fr; padding-top:72px; }
+    .hero-text {
+      display:flex; flex-direction:column; justify-content:center;
+      padding:80px 64px;
+    }
+    .hero-eyebrow {
+      font-size:11px; letter-spacing:0.2em; text-transform:uppercase;
+      color:var(--sage); margin-bottom:24px;
+    }
+    .hero-title {
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(48px,5vw,76px); font-weight:300; line-height:1.05;
+      margin-bottom:28px;
+    }
+    .hero-title em { font-style:italic; color:var(--sage); }
+    .hero-desc { font-size:15px; line-height:1.8; color:var(--muted); max-width:380px; margin-bottom:44px; }
+    .hero-cta { display:flex; gap:20px; align-items:center; }
+    .btn-primary {
+      background:var(--black); color:var(--white);
+      padding:14px 32px; font-size:12px; letter-spacing:0.1em;
+      text-transform:uppercase; border:none; cursor:pointer;
+      text-decoration:none; display:inline-block; transition:background 0.2s;
+    }
+    .btn-primary:hover { background:var(--sage); }
+    .btn-ghost {
+      color:var(--black); font-size:12px; letter-spacing:0.1em;
+      text-transform:uppercase; text-decoration:none;
+      border-bottom:1px solid var(--black); padding-bottom:2px;
+      transition:color 0.2s, border-color 0.2s;
+    }
+    .btn-ghost:hover { color:var(--sage); border-color:var(--sage); }
+    .hero-visual {
+      background:var(--cream);
+      display:flex; align-items:center; justify-content:center;
+      position:relative; overflow:hidden;
+    }
+    .product-mock {
+      width:180px; height:300px;
+      background:linear-gradient(160deg,#d4c9b8 0%,#b8a98e 100%);
+      border-radius:90px 90px 60px 60px;
+      position:relative;
+      box-shadow:24px 32px 64px rgba(0,0,0,0.14);
+      animation:float 6s ease-in-out infinite;
+    }
+    .product-mock::after {
+      content:'MARIN';
+      position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+      font-family:'Cormorant Garamond',serif;
+      font-size:16px; letter-spacing:0.25em; color:rgba(255,255,255,0.65);
+    }
+    @keyframes float {
+      0%,100% { transform:translateY(0); }
+      50% { transform:translateY(-14px); }
+    }
+    .hero-bg-text {
+      position:absolute; bottom:-30px; right:-10px;
+      font-family:'Cormorant Garamond',serif;
+      font-size:160px; font-weight:600;
+      color:rgba(10,10,10,0.04); line-height:1;
+      pointer-events:none; user-select:none;
+    }
+
+    .marquee-wrap { overflow:hidden; background:var(--black); padding:14px 0; }
+    .marquee { display:flex; gap:64px; width:max-content; animation:marquee 22s linear infinite; }
+    .marquee span { font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--cream); white-space:nowrap; }
+    .marquee span.dot { color:var(--gold); }
+    @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+    section { padding:100px 48px; }
+    .section-label { font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--sage); margin-bottom:16px; }
+    .section-title { font-family:'Cormorant Garamond',serif; font-size:clamp(34px,3vw,50px); font-weight:300; line-height:1.1; margin-bottom:48px; }
+
+    .products-header { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:48px; }
+    .products-header .section-title { margin-bottom:0; }
+    .product-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; }
+    .product-card { background:var(--cream); position:relative; overflow:hidden; cursor:pointer; }
+    .product-card:hover .product-img-wrap { transform:scale(1.04); }
+    .product-card:hover .product-overlay { opacity:1; }
+    .product-img-wrap {
+      height:360px; display:flex; align-items:center; justify-content:center;
+      transition:transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94);
+    }
+    .product-bottle { border-radius:50px 50px 30px 30px; box-shadow:8px 16px 32px rgba(0,0,0,0.1); }
+    .b1 { width:80px; height:150px; background:linear-gradient(160deg,#c5bdb0,#9e8e78); }
+    .b2 { width:90px; height:130px; background:linear-gradient(160deg,#8a9e8c,#5a7a5c); border-radius:8px; }
+    .b3 { width:70px; height:170px; background:linear-gradient(160deg,#c9a96e,#a07a40); }
+    .product-overlay {
+      position:absolute; inset:0; background:rgba(10,10,10,0.72);
+      display:flex; align-items:center; justify-content:center;
+      opacity:0; transition:opacity 0.4s;
+    }
+    .overlay-btn {
+      color:var(--white); font-size:12px; letter-spacing:0.1em; text-transform:uppercase;
+      border:1px solid rgba(255,255,255,0.6); padding:12px 24px; cursor:pointer;
+      background:transparent; transition:background 0.2s, color 0.2s;
+    }
+    .overlay-btn:hover { background:var(--white); color:var(--black); }
+    .product-info { padding:20px 24px; }
+    .product-category { font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:var(--sage); margin-bottom:6px; }
+    .product-name { font-family:'Cormorant Garamond',serif; font-size:20px; font-weight:400; margin-bottom:4px; }
+    .product-desc { font-size:12px; color:var(--muted); margin-bottom:12px; line-height:1.6; }
+    .product-footer { display:flex; justify-content:space-between; align-items:center; }
+    .product-price { font-size:14px; font-weight:500; }
+    .add-btn {
+      font-size:11px; letter-spacing:0.08em; text-transform:uppercase;
+      background:var(--black); color:var(--white);
+      padding:8px 16px; border:none; cursor:pointer; transition:background 0.2s;
+    }
+    .add-btn:hover { background:var(--sage); }
+
+    .ingredients { background:var(--black); color:var(--white); }
+    .ingredients .section-label { color:var(--gold); }
+    .ingredients .section-title { color:var(--white); }
+    .ingr-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; }
+    .ingr-item {
+      background:var(--black); padding:40px 28px;
+      border:0.5px solid rgba(255,255,255,0.06); transition:background 0.3s;
+    }
+    .ingr-item:hover { background:rgba(255,255,255,0.03); }
+    .ingr-num { font-family:'Cormorant Garamond',serif; font-size:44px; font-weight:300; color:rgba(255,255,255,0.08); line-height:1; margin-bottom:16px; }
+    .ingr-name { font-family:'Cormorant Garamond',serif; font-size:20px; color:var(--white); margin-bottom:10px; }
+    .ingr-desc { font-size:12px; color:rgba(255,255,255,0.38); line-height:1.7; }
+
+    .howto { background:var(--cream); }
+    .howto-grid { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; }
+    .howto-visual { background:var(--white); height:460px; display:flex; align-items:center; justify-content:center; }
+    .visual-bottles { display:flex; gap:20px; align-items:flex-end; }
+    .vb { border-radius:40px 40px 20px 20px; box-shadow:12px 20px 40px rgba(0,0,0,0.1); }
+    .vb1 { width:60px; height:120px; background:linear-gradient(160deg,#c5bdb0,#9e8e78); }
+    .vb2 { width:70px; height:150px; background:linear-gradient(160deg,#8a9e8c,#5a7a5c); }
+    .vb3 { width:55px; height:100px; background:linear-gradient(160deg,#c9a96e,#a07a40); }
+    .step-list { display:flex; flex-direction:column; gap:28px; }
+    .step-item { display:flex; align-items:flex-start; gap:20px; }
+    .step-num {
+      width:36px; height:36px; border-radius:50%;
+      border:1px solid var(--black); flex-shrink:0;
+      display:flex; align-items:center; justify-content:center;
+      font-family:'Cormorant Garamond',serif; font-size:16px;
+    }
+    .step-item h4 { font-family:'Cormorant Garamond',serif; font-size:20px; font-weight:400; margin-bottom:6px; }
+    .step-item p { font-size:13px; color:var(--muted); line-height:1.7; }
+
+    .reviews { background:var(--white); }
+    .review-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; }
+    .review-card { background:var(--cream); padding:36px 32px; }
+    .review-stars { color:var(--gold); font-size:14px; letter-spacing:3px; margin-bottom:16px; }
+    .review-text { font-family:'Cormorant Garamond',serif; font-size:18px; font-weight:300; font-style:italic; line-height:1.6; color:var(--black); margin-bottom:20px; }
+    .review-author { font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted); }
+    .review-product { font-size:11px; color:var(--sage); margin-top:4px; }
+
+    .banner {
+      background:var(--sage); padding:80px 48px;
+      display:flex; justify-content:space-between; align-items:center;
+    }
+    .banner-title { font-family:'Cormorant Garamond',serif; font-size:clamp(32px,3vw,48px); font-weight:300; color:var(--white); line-height:1.1; }
+    .banner-title em { font-style:italic; }
+    .banner-form { display:flex; }
+    .banner-input {
+      padding:14px 20px; font-size:13px; border:none;
+      background:rgba(255,255,255,0.2); color:var(--white); width:280px; outline:none;
+    }
+    .banner-input::placeholder { color:rgba(255,255,255,0.5); }
+    .banner-submit {
+      padding:14px 24px; font-size:12px; letter-spacing:0.08em; text-transform:uppercase;
+      background:var(--black); color:var(--white); border:none; cursor:pointer; transition:background 0.2s;
+    }
+    .banner-submit:hover { background:var(--gold); }
+
+    footer { background:var(--black); color:rgba(255,255,255,0.45); padding:60px 48px 32px; }
+    .footer-top { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:48px; margin-bottom:48px; }
+    .footer-brand { font-family:'Cormorant Garamond',serif; font-size:24px; font-weight:600; letter-spacing:0.1em; color:var(--white); margin-bottom:16px; }
+    .footer-desc { font-size:13px; line-height:1.7; }
+    .footer-col h5 { font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:var(--white); margin-bottom:16px; }
+    .footer-col ul { list-style:none; display:flex; flex-direction:column; gap:10px; }
+    .footer-col a { font-size:13px; color:rgba(255,255,255,0.4); text-decoration:none; transition:color 0.2s; }
+    .footer-col a:hover { color:var(--white); }
+    .footer-bottom { border-top:0.5px solid rgba(255,255,255,0.08); padding-top:24px; display:flex; justify-content:space-between; font-size:12px; }
+
+    .toast {
+      position:fixed; bottom:32px; right:32px; z-index:999;
+      background:var(--black); color:var(--white);
+      padding:14px 24px; font-size:13px;
+      transform:translateY(80px); opacity:0;
+      transition:all 0.35s cubic-bezier(0.34,1.56,0.64,1);
+      pointer-events:none;
+    }
+    .toast.show { transform:translateY(0); opacity:1; }
+
+    @media (max-width:900px) {
+      nav { padding:16px 24px; }
+      .nav-links { display:none; }
+      .hero { grid-template-columns:1fr; }
+      .hero-visual { display:none; }
+      .hero-text { padding:48px 24px; }
+      section { padding:64px 24px; }
+      .product-grid { grid-template-columns:1fr; }
+      .ingr-grid { grid-template-columns:1fr 1fr; }
+      .howto-grid { grid-template-columns:1fr; }
+      .howto-visual { display:none; }
+      .review-grid { grid-template-columns:1fr; }
+      .banner { flex-direction:column; gap:32px; align-items:flex-start; }
+      .banner-form { width:100%; }
+      .banner-input { flex:1; width:auto; }
+      .footer-top { grid-template-columns:1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="#" class="nav-logo">Marin Hair</a>
+  <ul class="nav-links">
+    <li><a href="#products">제품</a></li>
+    <li><a href="#ingredients">성분</a></li>
+    <li><a href="#howto">사용법</a></li>
+    <li><a href="#reviews">리뷰</a></li>
+  </ul>
+  <button class="cart-btn" id="cart-btn">장바구니 (0)</button>
+</nav>
+
+<section class="hero">
+  <div class="hero-text">
+    <p class="hero-eyebrow">Pure Hair Science — Since 2024</p>
+    <h1 class="hero-title">자연이 만든<br><em>완벽한 균형</em></h1>
+    <p class="hero-desc">자연 유래 성분과 첨단 두피 과학의 만남.<br>손상된 모발부터 민감한 두피까지,<br>마린 헤어가 본연의 아름다움을 되찾아드립니다.</p>
+    <div class="hero-cta">
+      <a href="#products" class="btn-primary">제품 보러가기</a>
+      <a href="#ingredients" class="btn-ghost">성분 알아보기</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="product-mock"></div>
+    <div class="hero-bg-text">HAIR</div>
+  </div>
+</section>
+
+<div class="marquee-wrap">
+  <div class="marquee">
+    <span>비건 인증</span><span class="dot">✦</span>
+    <span>무실리콘</span><span class="dot">✦</span>
+    <span>동물실험 반대</span><span class="dot">✦</span>
+    <span>천연 유래 성분 98%</span><span class="dot">✦</span>
+    <span>두피 피부과 테스트 완료</span><span class="dot">✦</span>
+    <span>해외 배송 가능</span><span class="dot">✦</span>
+    <span>비건 인증</span><span class="dot">✦</span>
+    <span>무실리콘</span><span class="dot">✦</span>
+    <span>동물실험 반대</span><span class="dot">✦</span>
+    <span>천연 유래 성분 98%</span><span class="dot">✦</span>
+    <span>두피 피부과 테스트 완료</span><span class="dot">✦</span>
+    <span>해외 배송 가능</span><span class="dot">✦</span>
+  </div>
+</div>
+
+<section id="products">
+  <div class="products-header">
+    <div>
+      <p class="section-label">Our Products</p>
+      <h2 class="section-title">시그니처 컬렉션</h2>
+    </div>
+    <a href="#" class="btn-ghost">전체 보기</a>
+  </div>
+  <div class="product-grid">
+    <div class="product-card">
+      <div class="product-img-wrap"><div class="product-bottle b1"></div></div>
+      <div class="product-overlay"><button class="overlay-btn" onclick="addToCart('딥 모이스처 샴푸')">장바구니 담기</button></div>
+      <div class="product-info">
+        <p class="product-category">Shampoo</p>
+        <h3 class="product-name">딥 모이스처 샴푸</h3>
+        <p class="product-desc">건조하고 손상된 모발에 깊은 수분을 공급하는 프리미엄 샴푸</p>
+        <div class="product-footer">
+          <span class="product-price">32,000원</span>
+          <button class="add-btn" onclick="addToCart('딥 모이스처 샴푸')">담기</button>
+        </div>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-img-wrap"><div class="product-bottle b2"></div></div>
+      <div class="product-overlay"><button class="overlay-btn" onclick="addToCart('두피 케어 에센스')">장바구니 담기</button></div>
+      <div class="product-info">
+        <p class="product-category">Scalp Care</p>
+        <h3 class="product-name">두피 케어 에센스</h3>
+        <p class="product-desc">민감한 두피를 진정시키고 건강한 모발 성장을 돕는 에센스</p>
+        <div class="product-footer">
+          <span class="product-price">45,000원</span>
+          <button class="add-btn" onclick="addToCart('두피 케어 에센스')">담기</button>
+        </div>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-img-wrap"><div class="product-bottle b3"></div></div>
+      <div class="product-overlay"><button class="overlay-btn" onclick="addToCart('골든 리페어 트리트먼트')">장바구니 담기</button></div>
+      <div class="product-info">
+        <p class="product-category">Treatment</p>
+        <h3 class="product-name">골든 리페어 트리트먼트</h3>
+        <p class="product-desc">극손상 모발을 집중 케어하는 골드 성분 함유 트리트먼트</p>
+        <div class="product-footer">
+          <span class="product-price">38,000원</span>
+          <button class="add-btn" onclick="addToCart('골든 리페어 트리트먼트')">담기</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="ingredients" id="ingredients">
+  <p class="section-label">Key Ingredients</p>
+  <h2 class="section-title">자연이 선물한<br>핵심 성분</h2>
+  <div class="ingr-grid">
+    <div class="ingr-item">
+      <div class="ingr-num">01</div>
+      <h3 class="ingr-name">아르간 오일</h3>
+      <p class="ingr-desc">모로코 아르간 나무에서 추출한 황금빛 오일. 모발에 깊은 영양을 공급하고 광택을 더해줍니다.</p>
+    </div>
+    <div class="ingr-item">
+      <div class="ingr-num">02</div>
+      <h3 class="ingr-name">티트리 추출물</h3>
+      <p class="ingr-desc">천연 항균 성분으로 두피의 불균형을 바로잡고 청결한 두피 환경을 만들어줍니다.</p>
+    </div>
+    <div class="ingr-item">
+      <div class="ingr-num">03</div>
+      <h3 class="ingr-name">케라틴 단백질</h3>
+      <p class="ingr-desc">모발 본연의 구조를 이루는 단백질. 손상된 모발의 결을 회복하고 탄력을 되살려줍니다.</p>
+    </div>
+    <div class="ingr-item">
+      <div class="ingr-num">04</div>
+      <h3 class="ingr-name">히알루론산</h3>
+      <p class="ingr-desc">자체 무게의 1,000배 수분을 머금는 성분. 모발에 지속적인 수분막을 형성합니다.</p>
+    </div>
+  </div>
+</section>
+
+<section class="howto" id="howto">
+  <div class="howto-grid">
+    <div class="howto-visual">
+      <div class="visual-bottles">
+        <div class="vb vb1"></div>
+        <div class="vb vb2"></div>
+        <div class="vb vb3"></div>
+      </div>
+    </div>
+    <div>
+      <p class="section-label">How To Use</p>
+      <h2 class="section-title">올바른<br>사용 방법</h2>
+      <div class="step-list">
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div><h4>충분히 적셔주세요</h4><p>세발 전 미온수로 두피와 모발을 충분히 적셔주세요. 모공이 열려 성분 흡수가 좋아집니다.</p></div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div><h4>두피부터 마사지</h4><p>적당량을 덜어 두피에 먼저 바르고 손끝으로 부드럽게 마사지해주세요. 3~5분이 적당합니다.</p></div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div><h4>깨끗하게 헹구기</h4><p>잔여물이 남지 않도록 미온수로 충분히 헹궈주세요. 마지막엔 찬물로 마무리하면 모발이 윤기납니다.</p></div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">4</div>
+          <div><h4>트리트먼트로 마무리</h4><p>샴푸 후 골든 리페어 트리트먼트를 모발 끝에 바르고 2분 후 헹궈주세요.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="reviews" id="reviews">
+  <p class="section-label">Customer Reviews</p>
+  <h2 class="section-title">고객 후기</h2>
+  <div class="review-grid">
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"두 달 사용 후 확실히 모발이 부드러워졌어요. 향도 너무 좋고 두피 당김이 사라졌습니다."</p>
+      <p class="review-author">김지연 님</p>
+      <p class="review-product">딥 모이스처 샴푸 구매</p>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"지성 두피라 항상 고민이었는데 티트리 성분 덕분에 하루 종일 청결하게 유지돼요."</p>
+      <p class="review-author">박소현 님</p>
+      <p class="review-product">두피 케어 에센스 구매</p>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">★★★★☆</div>
+      <p class="review-text">"염색으로 완전히 망가진 모발이었는데 트리트먼트 3주 만에 끊기던 게 줄었어요."</p>
+      <p class="review-author">이민경 님</p>
+      <p class="review-product">골든 리페어 트리트먼트 구매</p>
+    </div>
+  </div>
+</section>
+
+<div class="banner">
+  <div>
+    <h2 class="banner-title">지금 구독하고<br><em>10% 할인</em> 받으세요</h2>
+  </div>
+  <div class="banner-form">
+    <input class="banner-input" type="email" placeholder="이메일 주소를 입력해주세요">
+    <button class="banner-submit" onclick="showToast('구독 완료! 쿠폰이 발송되었습니다 ✓')">구독하기</button>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand">Marin Hair</div>
+      <p class="footer-desc">자연과 과학의 균형으로<br>가장 건강한 모발을 만듭니다.<br>모든 제품은 비건 인증 원료만을 사용합니다.</p>
+    </div>
+    <div class="footer-col">
+      <h5>제품</h5>
+      <ul><li><a href="#">샴푸</a></li><li><a href="#">트리트먼트</a></li><li><a href="#">두피케어</a></li><li><a href="#">세트 상품</a></li></ul>
+    </div>
+    <div class="footer-col">
+      <h5>고객 지원</h5>
+      <ul><li><a href="#">공지사항</a></li><li><a href="#">자주 묻는 질문</a></li><li><a href="#">교환 / 반품</a></li><li><a href="#">1:1 문의</a></li></ul>
+    </div>
+    <div class="footer-col">
+      <h5>브랜드</h5>
+      <ul><li><a href="#">브랜드 스토리</a></li><li><a href="#">성분 철학</a></li><li><a href="#">인스타그램</a></li><li><a href="#">유튜브</a></li></ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2024 Marin Hair. All rights reserved.</span>
+    <span>개인정보처리방침 · 이용약관</span>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  let cartCount = 0;
+  function addToCart(name) {
+    cartCount++;
+    document.getElementById('cart-btn').textContent = `장바구니 (${cartCount})`;
+    showToast(`"${name}" 이(가) 담겼습니다 ✓`);
+  }
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2800);
+  }
+  window.addEventListener('scroll', () => {
+    document.getElementById('nav').style.boxShadow =
+      window.scrollY > 10 ? '0 2px 20px rgba(0,0,0,0.07)' : 'none';
+  });
+</script>
+</body>
+</html>
